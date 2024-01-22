@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Contents</title>
+</head>
+<body>
+    <h1>Cart Contents</h1>
+    <div id="cart-items"></div>
+    <div id="total"></div>
+
+    <script>
+
+        var storedCart = sessionStorage.getItem("cart");
+        var cart = storedCart ? JSON.parse(storedCart) : [];
+
+        // Display cart contents
+        var cartItemsContainer = document.getElementById("cart-items");
+        var totalContainer = document.getElementById("total");
+
+        cart.forEach(function (item) {
+            var cartItem = document.createElement("div");
+            cartItem.className = "cart-item";
+            cartItem.innerHTML = "<strong>" + item.name + "</strong> - $" + item.price.toFixed(2);
+            cartItemsContainer.appendChild(cartItem);
+        });
+
+        var total = cart.reduce(function (acc, item) {
+            return acc + item.price;
+        }, 0);
+        totalContainer.textContent = "Total: $" + total.toFixed(2);
+    </script>
+</body>
+</html>
